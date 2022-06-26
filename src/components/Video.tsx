@@ -50,8 +50,6 @@ export function Video({ lessonSlug }: VideoProps) {
     )
   }
 
-  console.log(data)
-
   return (
     <div className="flex-1">
       <div className="bg-black flex justify-center">
