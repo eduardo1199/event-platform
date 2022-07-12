@@ -3,12 +3,15 @@ import { CaretRight, DiscordLogo, FileArrowDown, Lightning } from "phosphor-reac
 
 import '@vime/core/themes/default.css';
 import { useGetLessonBySlugQuery } from "../graphql/generated";
+import classNames from "classnames";
 
 interface VideoProps {
   lessonSlug: string;
+  isOpenSideBar: boolean;
+  onOpenSideBar: () => void;
 }
 
-export function Video({ lessonSlug }: VideoProps) {
+export function Video({ lessonSlug, isOpenSideBar, onOpenSideBar }: VideoProps) {
   const { data } = useGetLessonBySlugQuery({
     variables: {
       slug: lessonSlug
@@ -23,8 +26,16 @@ export function Video({ lessonSlug }: VideoProps) {
     )
   }
 
+  function onCloseSideBar() {
+    if(isOpenSideBar) {
+      onOpenSideBar();
+    }
+  }
+
   return (
-    <div className="flex-1">
+    <div className={classNames("flex-1", {
+      "opacity-30": isOpenSideBar
+    })} onMouseDown={() => onCloseSideBar()}>
       <div className="bg-black flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
           <Player>
